@@ -38,3 +38,43 @@ export const registerUser = async function (payload: Partial<IUser>) {
     data: jwtToken,
   };
 };
+
+export const loginUser = async function name(payload: Partial<IUser>) {
+  const { data, error } = await supabase
+    .from("user_profiles")
+    .select("*")
+    .eq("email", payload.email);
+
+  if (error || !data || !data[0]) {
+    return {
+      success: false,
+      message: "کاربر یافت نشد.",
+    };
+  }
+  const user = data[0];
+  const isPasswordValid = await bcrypt.compare(
+    payload.password!,
+    data[0].password
+  );
+  if (!isPasswordValid) {
+    return {
+      success: false,
+      message: "نام کاربری با کلمه عبور تطابق ندارند.",
+    };
+  }
+  if (user.role !== payload.role) {
+    return {
+      success: false,
+      message: "نام کاربری با نقش انتخابی وجود ندارد.",
+    };
+  }
+
+  const jwtToken = jwt.sign({ userId: user.id }, process.env.JWT_SECREC!, {
+    expiresIn: "1d",
+  });
+  return {
+    success: true,
+    message: "با موفقیت وارد اکانت خود شدید.",
+    data: jwtToken,
+  };
+};
