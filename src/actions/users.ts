@@ -3,6 +3,8 @@ import supabase from "@/config/supabase-config";
 import { IUser } from "@/interfaces";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
+
 export const registerUser = async function (payload: Partial<IUser>) {
   // check if user already exists
   const { data: userAlreadyExists, error: userExistsError } = await supabase
@@ -29,7 +31,7 @@ export const registerUser = async function (payload: Partial<IUser>) {
       error: error.message,
     };
   }
-  const jwtToken = jwt.sign({ userId: data[0].id }, process.env.JWT_SECREC!, {
+  const jwtToken = jwt.sign({ userId: data[0].id }, process.env.JWT_SECRET!, {
     expiresIn: "1d",
   });
   return {
@@ -69,7 +71,7 @@ export const loginUser = async function name(payload: Partial<IUser>) {
     };
   }
 
-  const jwtToken = jwt.sign({ userId: user.id }, process.env.JWT_SECREC!, {
+  const jwtToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
     expiresIn: "1d",
   });
   return {
@@ -77,4 +79,38 @@ export const loginUser = async function name(payload: Partial<IUser>) {
     message: "با موفقیت وارد اکانت خود شدید.",
     data: jwtToken,
   };
+};
+
+export const retriveLogedInUser = async function () {
+  try {
+    const cookiesStore = await cookies();
+
+    const jwtToken = cookiesStore.get("jwt-token")?.value;
+    const decodedToken: any = jwt.verify(
+      jwtToken || "",
+      process.env.JWT_SECRET!
+    );
+
+    const userId = decodedToken.userId;
+
+    const { data: users, error } = await supabase
+      .from("user_profiles")
+      .select("*")
+      .eq("id", userId);
+
+    if (users?.length === 0 || error) {
+      throw new Error("اطلاعات کاربر یافت نشد.");
+    }
+
+    const user = users[0];
+    delete user.password;
+
+    return {
+      success: true,
+      message: "اطلاعات با موفقیت بارگیری شد.",
+      user: user,
+    };
+  } catch (err: any) {
+    return { success: false, message: err.message };
+  }
 };
