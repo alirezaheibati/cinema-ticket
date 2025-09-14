@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { El_Messiri, Vazirmatn } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import MainLayout from "@/layouts/main-layout";
 const elMessiri = El_Messiri({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -27,8 +28,10 @@ export default function RootLayout({
         className={`${elMessiri.className} ${vazirmatn.className}`}
         dir="rtl"
       >
-        {children}
-        <Toaster dir="rtl" position="top-center" richColors />
+        <MainLayout>
+          {children}
+          <Toaster dir="rtl" position="top-center" richColors />
+        </MainLayout>
       </body>
     </html>
   );
