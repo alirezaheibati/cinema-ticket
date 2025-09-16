@@ -1,0 +1,17 @@
+export const movieGenres = [
+  { genreEn: "action", genreFa: "اکشن" },
+  { genreEn: "comedy", genreFa: "کمدی" },
+  { genreEn: "drama", genreFa: "درام" },
+  { genreEn: "fantasy", genreFa: "فانتزی" },
+  { genreEn: "horror", genreFa: "ترسناک" },
+  { genreEn: "mystery", genreFa: "معمایی" },
+  { genreEn: "romance", genreFa: "عاشقانه" },
+  { genreEn: "thriller", genreFa: "هیجان انگیز" },
+  { genreEn: "western", genreFa: "وسترن" },
+  { genreEn: "sci-fi", genreFa: "علمی تخیلی" },
+  { genreEn: "documentary", genreFa: "مستند" },
+  { genreEn: "animation", genreFa: "انیمیشن" },
+  { genreEn: "adventure", genreFa: "ماجراجویی" },
+  { genreEn: "crime", genreFa: "جنایی" },
+  { genreEn: "musical", genreFa: "موزیکال" },
+];
