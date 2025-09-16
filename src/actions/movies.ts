@@ -64,3 +64,22 @@ export const getMovieById = async (id: string) => {
     movie: movie,
   };
 };
+
+export const getAllMovies = async () => {
+  const { data, error } = await supabase
+    .from("movies")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) {
+    return {
+      success: false,
+      message: "دریافت لیست فیلم ها انجام نشد.",
+      movies: [],
+    };
+  }
+  return {
+    success: true,
+    message: "لیست فیلم ها با موفقیت دریافت شد.",
+    movies: data as IMovie[],
+  };
+};
