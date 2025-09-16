@@ -13,7 +13,8 @@ export interface IMovie {
   id: string;
   title: string;
   description: string;
-  release_date: string;
+  duration: number;
+  release_date: Date;
   genre: string;
   poster_url: string;
   created_at: string;
