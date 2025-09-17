@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
@@ -41,6 +42,7 @@ export default function TopNav() {
       >
         <SheetContent className="">
           <SheetHeader>
+            <SheetDescription />
             <SheetTitle></SheetTitle>
             <div className="flex justify-center items-center h-screen flex-col">
               {activeFrom === "register" ? <RegisterForm /> : <LoginFrom />}
