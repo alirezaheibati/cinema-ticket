@@ -1,6 +1,7 @@
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -47,7 +48,7 @@ export default function SidebarMenu({
         <SheetContent>
           <SheetTitle />
           <SheetHeader />
-
+          <SheetDescription />
           <ul className="flex px-4 flex-col justify-start items-start gap-2 w-full">
             {menuItems.map((item) => (
               <SidebarRow
@@ -55,6 +56,7 @@ export default function SidebarMenu({
                 title={item.title}
                 path={item.path}
                 icon={item.icon}
+                onclickNavItem={setOpenSidebar}
               />
             ))}
           </ul>
