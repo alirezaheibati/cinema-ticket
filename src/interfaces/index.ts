@@ -21,3 +21,14 @@ export interface IMovie {
   updated_at: string;
   is_active: boolean;
 }
+
+export interface ITheater {
+  id: string;
+  name: string;
+  address: string;
+  capacity: number;
+  features: string;
+  created_at: string;
+  updated_at: string;
+  is_active: boolean;
+}
