@@ -32,3 +32,21 @@ export interface ITheater {
   updated_at: string;
   is_active: boolean;
 }
+
+export interface IShow {
+  id: string;
+  movie_id: number;
+  theater_id: number;
+  date: Date;
+  time: string;
+  ticket_price: number;
+  booked_seats: number[];
+  available_seats_count: number;
+  created_at: string;
+  updated_at: string;
+  is_active: boolean;
+
+  //run time properties
+  movie?: IMovie;
+  theater: ITheater;
+}
