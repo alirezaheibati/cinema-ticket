@@ -78,3 +78,18 @@ export const theaterEquipments = [
     icon: "wifi.png",
   },
 ] as const;
+
+export const persianMonths = [
+  "فروردین",
+  "اردیبهشت",
+  "خرداد",
+  "تیر",
+  "مرداد",
+  "شهریور",
+  "مهر",
+  "آبان",
+  "آذر",
+  "دی",
+  "بهمن",
+  "اسفند",
+];
