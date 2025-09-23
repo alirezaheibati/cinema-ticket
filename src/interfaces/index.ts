@@ -50,3 +50,9 @@ export interface IShow {
   movie?: IMovie;
   theater: ITheater;
 }
+
+export interface seat {
+  status: "sold" | "available" | "selected";
+  row: number;
+  number: number;
+}
