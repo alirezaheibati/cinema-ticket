@@ -48,7 +48,10 @@ export const deleteShow = async (id: string) => {
 };
 
 export const getShowById = async (id: string) => {
-  const { data, error } = await supabase.from("shows").select("*").eq("id", id);
+  const { data, error } = await supabase
+    .from("shows")
+    .select("*, movie:movies(*), theater:theaters(*)")
+    .eq("id", id);
   if (error || !data || !data[0]) {
     return {
       success: false,
@@ -68,6 +71,26 @@ export const getAllShows = async () => {
     .from("shows")
     .select("*, movie:movies(*), theater:theaters(*)")
     .order("created_at", { ascending: false });
+  if (error) {
+    return {
+      success: false,
+      message: "دریافت لیست سانس ها انجام نشد.",
+      shows: [],
+    };
+  }
+  return {
+    success: true,
+    message: "لیست سانس ها با موفقیت دریافت شد.",
+    shows: data as IShow[],
+  };
+};
+
+export const getShowsOfMovie = async (id: string) => {
+  const { data, error } = await supabase
+    .from("shows")
+    .select("*, movie:movies(*), theater:theaters(*)")
+    .eq("movie_id", id)
+    .order("date");
   if (error) {
     return {
       success: false,
