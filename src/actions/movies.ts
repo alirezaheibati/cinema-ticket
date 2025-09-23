@@ -83,3 +83,23 @@ export const getAllMovies = async () => {
     movies: data as IMovie[],
   };
 };
+
+export const searchMovies = async (term: string) => {
+  const { data, error } = await supabase
+    .from("movies")
+    .select("*")
+    .like("title", `%${term}%`)
+    .order("created_at", { ascending: false });
+  if (error) {
+    return {
+      success: false,
+      message: "دریافت لیست فیلم ها انجام نشد.",
+      movies: [],
+    };
+  }
+  return {
+    success: true,
+    message: "لیست فیلم ها با موفقیت دریافت شد.",
+    movies: data as IMovie[],
+  };
+};
