@@ -15,20 +15,8 @@ import { convertToPersianDigits } from "@/helpers/convertToPersianDigits";
 import mapGenre from "@/helpers/map-genre";
 import RemoveBtn from "@/components/ui/remove-btn";
 import Image from "next/image";
-const persianMonths = [
-  "فروردین",
-  "اردیبهشت",
-  "خرداد",
-  "تیر",
-  "مرداد",
-  "شهریور",
-  "مهر",
-  "آبان",
-  "آذر",
-  "دی",
-  "بهمن",
-  "اسفند",
-];
+import { persianMonths } from "@/constants";
+
 export default async function AdminMoviesPage() {
   const moviesResponse = await getAllMovies();
   if (!moviesResponse.success) {
