@@ -7,6 +7,7 @@ export interface IUser {
   created_at: string;
   updated_at: string;
   is_active: boolean;
+  wallet: number;
 }
 
 export interface IMovie {
@@ -55,4 +56,24 @@ export interface seat {
   status: "sold" | "available" | "selected";
   row: number;
   number: number;
+  price: number;
+}
+
+export interface IBooking {
+  id: number;
+  movie_id: number;
+  theater_id: number;
+  user_id: number;
+  show_id: number;
+  seat_numbers: number[];
+  total_payed: number;
+  status: "booked" | "refund";
+  created_at: string;
+  updated_at: string;
+
+  //run time properties
+  movie?: IMovie;
+  theater?: ITheater;
+  show?: IShow;
+  user?: IUser;
 }
