@@ -57,6 +57,7 @@ export interface seat {
   row: number;
   number: number;
   price: number;
+  showId: string;
 }
 
 export interface IBooking {
