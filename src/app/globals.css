@@ -4,10 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 body {
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 html {
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 @theme inline {
@@ -64,7 +64,7 @@ html {
   --muted-foreground: oklch(0.552 0.016 285.938);
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(65.193% 0.23416 23.66);
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.606 0.25 292.717);
@@ -124,4 +124,9 @@ html {
   body {
     @apply bg-background text-foreground;
   }
+}
+/* remove shadcn forced scrollbar for select element */
+html body[data-scroll-locked] {
+  --removed-body-scroll-bar-size: 0 !important;
+  margin-right: 0 !important;
 }
