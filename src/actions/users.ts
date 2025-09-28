@@ -24,16 +24,20 @@ export const registerUser = async function (payload: Partial<IUser>) {
   const { error, data } = await supabase
     .from("user_profiles")
     .insert([payload])
-    .select("id");
+    .select("*");
   if (error) {
     return {
       success: false,
       error: error.message,
     };
   }
-  const jwtToken = jwt.sign({ userId: data[0].id }, process.env.JWT_SECRET!, {
-    expiresIn: "1d",
-  });
+  const jwtToken = jwt.sign(
+    { userId: data[0].id, role: data[0].role },
+    process.env.JWT_SECRET!,
+    {
+      expiresIn: "1d",
+    }
+  );
   return {
     success: true,
     message: "ثبت نام شما با موفقیت انجام شد.",
@@ -71,9 +75,13 @@ export const loginUser = async function name(payload: Partial<IUser>) {
     };
   }
 
-  const jwtToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
-    expiresIn: "1d",
-  });
+  const jwtToken = jwt.sign(
+    { userId: user.id, role: user.role },
+    process.env.JWT_SECRET!,
+    {
+      expiresIn: "1d",
+    }
+  );
   return {
     success: true,
     message: "با موفقیت وارد اکانت خود شدید.",
