@@ -1,29 +1,65 @@
 import { NextResponse, NextRequest } from "next/server";
+import { jwtVerify } from "jose";
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   try {
     const pathname = request.nextUrl.pathname;
-    const token = request.cookies.get("jwt-token")?.value;
+    const token = request.cookies.get("jwt-token")?.value ?? "";
 
     const isPrivate =
       pathname.startsWith("/user") || pathname.startsWith("/admin");
-    if (isPrivate && !token) {
-      return NextResponse.redirect(new URL("/?form=login", request.url));
+
+    if (isPrivate) {
+      if (!token || token.trim() === "") {
+        return NextResponse.redirect(new URL("/?form=login", request.url));
+      } else {
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+
+        // Validate token format before verifying
+        if (token.split(".").length !== 3) {
+          throw new Error("Malformed JWT");
+        }
+
+        const verifyResult = await jwtVerify(token, secret);
+        if (
+          verifyResult.payload.userId &&
+          verifyResult.payload.exp &&
+          verifyResult.payload.exp * 1000 > new Date().getTime()
+        ) {
+          if (
+            pathname.startsWith("/user") &&
+            verifyResult.payload.role === "user"
+          ) {
+            const response = NextResponse.next();
+            const userId = String(verifyResult.payload.userId ?? "");
+            response.headers.set("user-id", userId);
+            return response;
+          } else if (
+            pathname.startsWith("/user") &&
+            verifyResult.payload.role !== "user"
+          ) {
+            return NextResponse.redirect(
+              new URL("/admin/dashboard", request.url)
+            );
+          } else if (
+            pathname.startsWith("/admin") &&
+            verifyResult.payload.role !== "admin"
+          ) {
+            return NextResponse.redirect(
+              new URL("/user/dashboard", request.url)
+            );
+          } else {
+            return NextResponse.next();
+          }
+        } else {
+          return NextResponse.redirect(new URL("/?form=login", request.url));
+        }
+      }
     }
 
     return NextResponse.next();
   } catch (err) {
-    console.log("middleware error:" + err);
+    console.log("Invalid token:", err);
     return NextResponse.redirect(new URL("/?form=login", request.url));
   }
 }
-
-export const config = {
-  matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
-  ],
-};
