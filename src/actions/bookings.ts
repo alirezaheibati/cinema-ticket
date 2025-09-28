@@ -82,3 +82,43 @@ export const makeBooking = async (booking: Partial<IBooking>) => {
     message: "رزرو بلیت با موفقیت انجام شد.",
   };
 };
+export const getAllBookings = async () => {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select(
+      "*, movie:movies(*), theater:theaters(*), show:shows(*), user:user_profiles(*)"
+    )
+    .order("created_at");
+  if (error) {
+    return {
+      success: false,
+      message: "دریافت لیست سفارشات انجام نشد.",
+      bookings: [],
+    };
+  }
+  return {
+    success: true,
+    message: "لیست سفارشات با موفقیت دریافت شد.",
+    bookings: data as IBooking[],
+  };
+};
+export const getBookingById = async (id: number) => {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select(
+      "*, movie:movies(*), theater:theaters(*), show:shows(*), user:user_profiles(*)"
+    )
+    .eq("id", id);
+  if (error || !data || !data[0]) {
+    return {
+      success: false,
+      message: "رزرو مورد نظر یافت نشد.",
+    };
+  }
+  const booking = data[0] as IBooking;
+  return {
+    success: true,
+    message: "اطلاعات رزرو با موفقیت دریافت شد.",
+    booking: booking,
+  };
+};
