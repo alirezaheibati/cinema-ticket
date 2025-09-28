@@ -14,6 +14,9 @@ const vazirmatn = Vazirmatn({
 export const metadata: Metadata = {
   title: "Cinema ticket",
   description: "Online cinema ticket booking service",
+  icons: {
+    icon: "/assets/logo.png",
+  },
 };
 
 export default function RootLayout({
