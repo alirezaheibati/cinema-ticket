@@ -24,8 +24,8 @@ export default function UserSidebar({
   const userMenuItems = [
     { title: "داشبورد", icon: <LayoutDashboard />, path: "/user/dashboard" },
     { title: "فیلم ها", icon: <Clapperboard />, path: "/user/movies" },
-    { title: "رزروها", icon: <TicketCheck />, path: "/user/reserves" },
-    { title: "پروفایل", icon: <UserRoundPen />, path: "/user/profile" },
+    { title: "بلیت های من", icon: <TicketCheck />, path: "/user/bookings" },
+    { title: "کیف پول", icon: <UserRoundPen />, path: "/user/wallet" },
   ];
   return (
     <>
