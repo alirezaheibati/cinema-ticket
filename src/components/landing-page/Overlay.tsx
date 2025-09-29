@@ -14,9 +14,9 @@ export default function Overlay() {
           فیلم فجر و تسهیل اتصال و ارتباط با درگاه یک‌پارچه‌ی سمفا برای سایر
           کسب‌وکارها
         </p>
-        <Button variant={"secondary"} className="block mx-auto cursor-pointer">
-          رزرو بلیط
-        </Button>
+        <p className="text-center">
+          لطفا جهت استفاده از خدمات سایت، ثبت نام نمایید.
+        </p>
       </div>
     </div>
   );
