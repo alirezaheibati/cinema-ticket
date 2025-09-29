@@ -25,11 +25,11 @@ export default function AdminSidebar({
 }) {
   const adminMenuItems = [
     { title: "داشبورد", icon: <LayoutDashboard />, path: "/admin/dashboard" },
-    { title: "فیلم", icon: <Clapperboard />, path: "/admin/movies" },
-    { title: "تئاتر", icon: <Drama />, path: "/admin/theater" },
-    { title: "سریال", icon: <MonitorPlay />, path: "/admin/shows" },
-    { title: "رزروها", icon: <TicketCheck />, path: "/admin/reserves" },
-    { title: "کاربران", icon: <UserRoundPen />, path: "/admin/users" },
+    { title: "فیلم ها", icon: <Clapperboard />, path: "/admin/movies" },
+    { title: "سالن های سینما", icon: <Drama />, path: "/admin/theaters" },
+    { title: "سانس های نمایش", icon: <MonitorPlay />, path: "/admin/shows" },
+    { title: "بلیت ها", icon: <TicketCheck />, path: "/admin/bookings" },
+    { title: "کاربران", icon: <UserRoundPen />, path: "#" },
   ];
   return (
     <>
